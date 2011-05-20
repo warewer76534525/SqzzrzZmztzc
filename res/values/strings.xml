@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="hello">Hello World, HomePage!</string>
-    <string name="app_name">SquareOmatic</string>
-    <string name="strSwitchOn">Switch On</string>
-    <string name="strSwitchOff">Switch Off</string>
-    <string name="turnOff">Turn Off</string>
-</resources>
