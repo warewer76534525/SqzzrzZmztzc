@@ -35,6 +35,7 @@ public class HomePage extends Activity { //implements LocationListener
 		txtStatus = (TextView)findViewById(R.id.txtStatus);
 		btnSwitch.setOnClickListener(new ButtonClickListener());
 		btnLogOff.setOnClickListener(new ButtonClickListener());
+		btnSwitch.setText((isRunning) ? R.string.strSwitchOff : R.string.strSwitchOn);
 		txtStatus.setText((isRunning) ? "Service is running" : "Service is stopped");
 	}
 	

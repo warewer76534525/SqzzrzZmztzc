@@ -42,6 +42,7 @@ public class PositionSenderService extends Service {
 		
 		if(location.getLatitude() != 0 || location.getLongitude() != 0){
 			Log.i("LOCATION", "latitude longitude");
+			Toast.makeText(getApplicationContext(), "Distance: " + location.distanceTo(latestLocation), Toast.LENGTH_LONG).show();
 			if(location.distanceTo(latestLocation) > 1000){
 				Log.i("LOCATION", "LOCATION DISTANCE > 1000");
 				updateLatestLocation(location.getLatitude(), location.getLongitude());

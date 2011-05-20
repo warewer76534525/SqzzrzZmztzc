@@ -1,12 +1,15 @@
 package com.triplelands.so.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
@@ -38,13 +41,25 @@ public class RegisterPage extends Activity {
 	}
 
 	private class SquareWebViewClient extends WebViewClient {
+
+		private ProgressDialog pd;
+
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
 			view.loadUrl(url);
 			return true;
 		}
+		
+		public void onPageStarted(WebView view, String url, Bitmap favicon) {
+			pd = new ProgressDialog(RegisterPage.this);
+			pd.setMessage("Loading...");
+			pd.show();
+			super.onPageStarted(view, url, favicon);
+		}
 
 		public void onPageFinished(WebView view, String url) {
+			pd.dismiss();
 			String uri = webView.getUrl();
+			Log.i("URL", uri);
 			if(uri != null && uri.contains("actk")){
 				String token = uri.substring(uri.lastIndexOf("=") + 1, uri.length());
 				setToken(token);

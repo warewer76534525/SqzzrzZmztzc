@@ -38,6 +38,7 @@ public class PositionSender implements InternetConnectionListener { //extends As
 			e.printStackTrace();
 		}
 		String data = new String(input);
+		Log.i("RESPON", "respon: " + data);
 //		Looper.prepare();
 		Toast.makeText(service.getApplicationContext(), data, Toast.LENGTH_LONG).show();
 		service.stopSelf();
