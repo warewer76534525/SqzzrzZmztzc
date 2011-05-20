@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.triplelands.so" android:versionCode="1"
+	android:versionName="1.0">
+	<uses-sdk android:minSdkVersion="4" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+	<application android:icon="@drawable/icon" android:label="@string/app_name">
+		<activity android:name=".activity.RegisterPage"
+			android:screenOrientation="portrait" android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".activity.HomePage"
+			android:screenOrientation="portrait" />
+
+		<receiver android:name=".scheduler.PositionSchedulerHandler">
+			<intent-filter>
+				<action android:name="com.triplelands.so.START_UPDATE_LOCATION"></action>
+			</intent-filter>
+		</receiver>
+		<receiver android:name=".service.PositionRetrieverHandler">
+			<intent-filter>
+				<action android:name="com.triplelands.so.LOCATION_RETRIEVED"></action>
+			</intent-filter>
+		</receiver>
+		<service android:name=".service.PositionRetrieverService" />
+		<service android:name=".service.PositionSenderService" />
+	</application>
+</manifest>
