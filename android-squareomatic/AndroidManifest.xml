@@ -16,7 +16,13 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".activity.HomePage"
+		<activity android:name=".activity.MainScreen"
+			android:screenOrientation="portrait" />
+		<activity android:name=".activity.FavoriteSpotActivity"
+			android:screenOrientation="portrait" />
+		<activity android:name=".activity.SettingActivity"
+			android:screenOrientation="portrait" />
+		<activity android:name=".activity.NearbyHistoryActivity"
 			android:screenOrientation="portrait" />
 
 		<receiver android:name=".scheduler.PositionSchedulerHandler">
@@ -24,6 +30,7 @@
 				<action android:name="com.triplelands.so.START_UPDATE_LOCATION"></action>
 			</intent-filter>
 		</receiver>
+		
 		<receiver android:name=".service.PositionRetrieverHandler">
 			<intent-filter>
 				<action android:name="com.triplelands.so.LOCATION_RETRIEVED"></action>
@@ -31,5 +38,6 @@
 		</receiver>
 		<service android:name=".service.PositionRetrieverService" />
 		<service android:name=".service.PositionSenderService" />
+		<service android:name=".service.HistoryRetrieverService" />
 	</application>
 </manifest>

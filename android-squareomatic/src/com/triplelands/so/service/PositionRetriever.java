@@ -19,22 +19,11 @@ public class PositionRetriever implements LocationListener { // extends AsyncTas
 		this.service = service;
 	}
 	
-//	protected Void doInBackground(Void... params) {
 	public void start(){
 		Log.i("START RETRIEVING", "START RETRIEVING THREAD");
 		lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-//		Looper.prepare();
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-		
-//		Looper.loop();
-//		return null;
+		lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 	}
-	
-//	@Override
-//	protected void onPostExecute(Void result) {
-//		Log.i("Azynch", "selesai thread");
-//		super.onPostExecute(result);
-//	}
 
 	@Override
 	public void onLocationChanged(Location location) {
@@ -46,9 +35,8 @@ public class PositionRetriever implements LocationListener { // extends AsyncTas
 			service.getApplicationContext().sendBroadcast(i);
 			lm.removeUpdates(this);
 			service.stopSelf();
-//			cancel(true);
 		} else {
-			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+			lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 		}
 	}
 

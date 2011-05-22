@@ -1,0 +1,14 @@
+<LinearLayout android:id="@+id/linearLayout1"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:paddingBottom="0dp"
+	android:paddingLeft="15dp" android:paddingRight="15dp"
+	android:paddingTop="15dp">
+	<FrameLayout android:layout_height="wrap_content"
+		android:id="@+id/frameLayout1" android:layout_width="fill_parent">
+		<ListView android:background="#00000000"
+			android:layout_height="wrap_content" android:id="@+id/lvLocation"
+			android:cacheColorHint="#00000000" android:layout_width="fill_parent"
+			android:divider="@drawable/divider" android:scrollbars="none"></ListView>
+	</FrameLayout>
+</LinearLayout>

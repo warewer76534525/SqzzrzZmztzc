@@ -5,4 +5,6 @@
     <string name="strSwitchOn">Switch On</string>
     <string name="strSwitchOff">Switch Off</string>
     <string name="turnOff">Turn Off</string>
+    <string name="getNearbyHistory">Get Nearby History</string>
+    <string name="logOff">Log Off</string>
 </resources>

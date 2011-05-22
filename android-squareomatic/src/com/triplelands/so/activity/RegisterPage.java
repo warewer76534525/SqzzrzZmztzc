@@ -35,7 +35,7 @@ public class RegisterPage extends Activity {
 			webView.loadUrl(" https://foursquare.com/oauth2/authenticate?client_id=OFQLSHGQYEBW345A12XRP1XZXD4NUVIMEYTYHEM4AH0BGIKB&response_type=code&redirect_uri=http://squareomatic.triplelands.com/?"
 					+ getImei());
 		} else {
-			startActivity(new Intent(RegisterPage.this, HomePage.class));
+			startActivity(new Intent(RegisterPage.this, MainScreen.class));
 			finish();
 		}
 	}
@@ -63,7 +63,7 @@ public class RegisterPage extends Activity {
 			if(uri != null && uri.contains("actk")){
 				String token = uri.substring(uri.lastIndexOf("=") + 1, uri.length());
 				setToken(token);
-				startActivity(new Intent(RegisterPage.this, HomePage.class));
+				startActivity(new Intent(RegisterPage.this, MainScreen.class));
 				finish();
 			}			
 		}

@@ -3,6 +3,7 @@ package com.triplelands.so.service;
 import java.io.IOException;
 import java.io.InputStream;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,11 +14,13 @@ public class PositionSender implements InternetConnectionListener { //extends As
 
 	private InternetHttpConnection internetConnection;
 	private String url;
-	private PositionSenderService service;
+//	private PositionSenderService service;
+	private Context context;
 	
-	public PositionSender(String url, PositionSenderService service) {
+	public PositionSender(String url, Context ctx) {
 		this.url = url;
-		this.service = service;
+		context = ctx;
+//		this.service = service;
 		internetConnection = new InternetHttpConnection(this);
 	}
 	
@@ -40,8 +43,8 @@ public class PositionSender implements InternetConnectionListener { //extends As
 		String data = new String(input);
 		Log.i("RESPON", "respon: " + data);
 //		Looper.prepare();
-		Toast.makeText(service.getApplicationContext(), data, Toast.LENGTH_LONG).show();
-		service.stopSelf();
+		Toast.makeText(context.getApplicationContext(), data, Toast.LENGTH_LONG).show();
+//		service.stopSelf();
 //		cancel(true);
 //		Looper.loop();
 	}
@@ -50,34 +53,37 @@ public class PositionSender implements InternetConnectionListener { //extends As
 	public void onConnectionError(Exception ex) {
 		showErrorMessage(ex);
 		ex.printStackTrace();
+//		service.stopSelf();
 	}
 
 	@Override
 	public void onConnectionResponseNotOk() {
 		sendErrorMessage("Response Not Ok");
-		
+//		service.stopSelf();
 	}
 
 	@Override
 	public void onConnectionTimeout() {
 		sendErrorMessage("Time Out Connection");
+//		service.stopSelf();
 	}
 
 	@Override
 	public void onCancelledConnection() {
 		sendErrorMessage("Cancelled");
+//		service.stopSelf();
 	}
 	
 	private void sendErrorMessage(String msg){
 //		Looper.prepare();
-		Toast.makeText(service.getApplicationContext(), "Connection failed: " + msg, Toast.LENGTH_LONG).show();
+		Toast.makeText(context.getApplicationContext(), "Connection failed: " + msg, Toast.LENGTH_LONG).show();
 //		cancel(true);
 //		Looper.loop();
 	}
 	
 	private void showErrorMessage(Exception ex){
 //		Looper.prepare();
-		Toast.makeText(service.getApplicationContext(), "" + ex.getMessage(), Toast.LENGTH_LONG).show();
+		Toast.makeText(context.getApplicationContext(), "" + ex.getMessage(), Toast.LENGTH_LONG).show();
 //		cancel(true);
 //		Looper.loop();
 	}

@@ -13,9 +13,12 @@ public class PositionRetrieverHandler extends BroadcastReceiver {
 		Log.i("RETRIEVING", "POSITION RETRIEVER RECEIVER");
 		Location loc = intent.getExtras().getParcelable("location");
 		if(loc != null){
-			Intent i = new Intent(context, PositionSenderService.class);
+//			Intent i = new Intent(context, PositionSenderService.class);
+//			i.putExtra("location", loc);
+//			context.startService(i);
+			Intent i = new Intent(context, HistoryRetrieverService.class);
 			i.putExtra("location", loc);
-			context.startService(i);
+			context.startService(i);			
 		} else {
 			Toast.makeText(context, "location null. waiting next alarm", Toast.LENGTH_SHORT).show();
 		}
