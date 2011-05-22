@@ -4,13 +4,15 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.triplelands.so.tools.InternetConnectionListener;
 import com.triplelands.so.tools.InternetHttpConnection;
 
-public class PositionSender implements InternetConnectionListener { //extends AsyncTask<Void, String, Void> implements InternetConnectionListener{
+public class PositionSender extends AsyncTask<Void, String, Void> implements InternetConnectionListener {
 
 	private InternetHttpConnection internetConnection;
 	private String url;
@@ -24,11 +26,11 @@ public class PositionSender implements InternetConnectionListener { //extends As
 		internetConnection = new InternetHttpConnection(this);
 	}
 	
-//	protected Void doInBackground(Void... params) {
-	public void start(){
+	protected Void doInBackground(Void... params) {
+//	public void start(){
 		Log.i("CHECKIN", "CHECKING IN: " + url);
 		internetConnection.setAndAccessURL(url);
-//		return null;
+		return null;
 	}
 
 	@Override
@@ -42,11 +44,11 @@ public class PositionSender implements InternetConnectionListener { //extends As
 		}
 		String data = new String(input);
 		Log.i("RESPON", "respon: " + data);
-//		Looper.prepare();
+		Looper.prepare();
 		Toast.makeText(context.getApplicationContext(), data, Toast.LENGTH_LONG).show();
 //		service.stopSelf();
 //		cancel(true);
-//		Looper.loop();
+		Looper.loop();
 	}
 
 	@Override
@@ -75,17 +77,17 @@ public class PositionSender implements InternetConnectionListener { //extends As
 	}
 	
 	private void sendErrorMessage(String msg){
-//		Looper.prepare();
+		Looper.prepare();
 		Toast.makeText(context.getApplicationContext(), "Connection failed: " + msg, Toast.LENGTH_LONG).show();
 //		cancel(true);
-//		Looper.loop();
+		Looper.loop();
 	}
 	
 	private void showErrorMessage(Exception ex){
-//		Looper.prepare();
+		Looper.prepare();
 		Toast.makeText(context.getApplicationContext(), "" + ex.getMessage(), Toast.LENGTH_LONG).show();
 //		cancel(true);
-//		Looper.loop();
+		Looper.loop();
 	}
 
 }

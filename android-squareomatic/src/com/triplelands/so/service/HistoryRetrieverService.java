@@ -59,8 +59,7 @@ public class HistoryRetrieverService extends Service {
 //				sender.start();
 				
 				String url = "http://squareomatic.triplelands.com/history.php?lat=" + location.getLatitude() + "&long=" + location.getLongitude() + "&actk=" + token;
-				HistoryReceiver historyReceiver = new HistoryReceiver(url, this);
-				historyReceiver.start();
+				new HistoryReceiver(url, this).execute();
 			} else {
 				Log.i("LOCATION", "LOCATION DISTANCE < 1000. STOPPING SERVICE. WAITING FOR NEXT ALARM");
 				Toast.makeText(getApplicationContext(), "have not moved.", Toast.LENGTH_SHORT).show();

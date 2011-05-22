@@ -39,8 +39,7 @@ public class NearbyHistoryActivity extends Activity {
 				Location loc = (Location)view.getTag();
 				String token = appPreference.getString("actk", "");
 				String url = "http://squareomatic.triplelands.com/squareomatic_checkin.php?placeid=" + loc.getId() + "&actk=" + token;
-				PositionSender sender = new PositionSender(url, NearbyHistoryActivity.this);
-				sender.start();
+				new PositionSender(url, NearbyHistoryActivity.this).execute();
 			}
 		});
 	}

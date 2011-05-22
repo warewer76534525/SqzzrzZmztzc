@@ -4,13 +4,14 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.triplelands.so.tools.InternetConnectionListener;
 import com.triplelands.so.tools.InternetHttpConnection;
 
-public class HistoryReceiver implements InternetConnectionListener {
+public class HistoryReceiver extends AsyncTask<Void, String, Void> implements InternetConnectionListener {
 
 	private String url;
 	private HistoryRetrieverService service;
@@ -24,8 +25,10 @@ public class HistoryReceiver implements InternetConnectionListener {
 		appPreference =  PreferenceManager.getDefaultSharedPreferences(service.getApplicationContext());
 	}
 	
-	public void start(){
+	protected Void doInBackground(Void... params) {
+		Log.i("RECEIVE HISTORY", "RECEIVING HISTORY: " + url);
 		internetConnection.setAndAccessURL(url);
+		return null;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.triplelands.so.activity;
 
+
 import com.triplelands.so.R;
 
 import android.app.Activity;
