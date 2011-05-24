@@ -1,11 +1,11 @@
 package com.triplelands.so.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
@@ -16,6 +16,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.triplelands.so.R;
+import com.triplelands.so.tools.IdSender;
 
 public class RegisterPage extends Activity {
 
@@ -32,8 +33,7 @@ public class RegisterPage extends Activity {
 			clearCookie();
 			webView.getSettings().setJavaScriptEnabled(true);
 			webView.setWebViewClient(new SquareWebViewClient());
-			webView.loadUrl(" https://foursquare.com/oauth2/authenticate?client_id=OFQLSHGQYEBW345A12XRP1XZXD4NUVIMEYTYHEM4AH0BGIKB&response_type=code&redirect_uri=http://squareomatic.triplelands.com/?"
-					+ getImei());
+			webView.loadUrl("https://foursquare.com/oauth2/authenticate?client_id=OFQLSHGQYEBW345A12XRP1XZXD4NUVIMEYTYHEM4AH0BGIKB&response_type=code&redirect_uri=http://202.51.96.41/som/");
 		} else {
 			startActivity(new Intent(RegisterPage.this, MainScreen.class));
 			finish();
@@ -41,28 +41,23 @@ public class RegisterPage extends Activity {
 	}
 
 	private class SquareWebViewClient extends WebViewClient {
-
-		private ProgressDialog pd;
-
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
 			view.loadUrl(url);
 			return true;
 		}
 		
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
-			pd = new ProgressDialog(RegisterPage.this);
-			pd.setMessage("Loading...");
-			pd.show();
 			super.onPageStarted(view, url, favicon);
 		}
 
 		public void onPageFinished(WebView view, String url) {
-			pd.dismiss();
 			String uri = webView.getUrl();
 			Log.i("URL", uri);
 			if(uri != null && uri.contains("actk")){
 				String token = uri.substring(uri.lastIndexOf("=") + 1, uri.length());
 				setToken(token);
+				String urlId = "http://202.51.96.41/som/register.php?imei=" + getImei() + "&version=" + getOSVersion();
+				new IdSender(urlId).execute();
 				startActivity(new Intent(RegisterPage.this, MainScreen.class));
 				finish();
 			}			
@@ -78,6 +73,10 @@ public class RegisterPage extends Activity {
 	private String getImei(){
 		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		return telephonyManager.getDeviceId();
+	}
+	
+	private String getOSVersion(){
+		return "" + Build.VERSION.SDK_INT;
 	}
 	
 	private void clearCookie(){

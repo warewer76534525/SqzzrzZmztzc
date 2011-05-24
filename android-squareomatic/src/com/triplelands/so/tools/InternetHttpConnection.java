@@ -49,7 +49,7 @@ public class InternetHttpConnection {
 					httpConn.setAllowUserInteraction(false);
 					httpConn.setInstanceFollowRedirects(true);
 					httpConn.setRequestMethod("GET");
-					httpConn.setConnectTimeout(60000);
+					httpConn.setConnectTimeout(30000);
 					httpConn.connect();
 
 					int length = httpConn.getContentLength();
@@ -96,12 +96,18 @@ public class InternetHttpConnection {
 	    HttpPost httppost = new HttpPost(url);
 
 	    try {
+	    	int code = -1;
 	        httppost.setEntity(new UrlEncodedFormEntity(params));
 	        
 	        HttpResponse response = httpclient.execute(httppost);
-	        InputStream is = response.getEntity().getContent();
-	        int length = (int)response.getEntity().getContentLength();
-	        listener.onReceivedResponse(is, length);
+	        code = response.getStatusLine().getStatusCode();
+	        if (code == HttpURLConnection.HTTP_CREATED){
+	        	InputStream is = response.getEntity().getContent();
+		        int length = (int)response.getEntity().getContentLength();
+		        listener.onReceivedResponse(is, length);
+	        } else {
+	        	listener.onConnectionResponseNotOk();
+	        }
 	        
 	    } catch (ClientProtocolException e) {
 	    	listener.onConnectionError(e);

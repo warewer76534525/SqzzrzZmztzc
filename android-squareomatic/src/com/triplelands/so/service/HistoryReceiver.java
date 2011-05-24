@@ -2,14 +2,26 @@ package com.triplelands.so.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.List;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.google.myjson.reflect.TypeToken;
+import com.triplelands.so.R;
+import com.triplelands.so.activity.MainScreen;
+import com.triplelands.so.model.Location;
 import com.triplelands.so.tools.InternetConnectionListener;
 import com.triplelands.so.tools.InternetHttpConnection;
+import com.triplelands.so.utils.JsonUtils;
 
 public class HistoryReceiver extends AsyncTask<Void, String, Void> implements InternetConnectionListener {
 
@@ -41,6 +53,7 @@ public class HistoryReceiver extends AsyncTask<Void, String, Void> implements In
 		}
 		String json = new String(input);
 		updateListHistory(json);
+		fireNotification();
 		Log.i("HISTORY", "HISTORY UPDATED: " + json);
 		service.stopSelf();
 	}
@@ -49,6 +62,30 @@ public class HistoryReceiver extends AsyncTask<Void, String, Void> implements In
 		SharedPreferences.Editor editor = appPreference.edit();
         editor.putString("history", data);
         editor.commit();
+	}
+	
+	private void fireNotification(){
+		String json = appPreference.getString("history", "");
+		Type listType = new TypeToken<List<Location>>(){}.getType();
+		List<Location> listLocation = JsonUtils.toListObject2(json, listType);
+		
+		if(listLocation != null && listLocation.size() > 0){
+			String alert = listLocation.size() + " spot(s) found!";
+			NotificationManager _mNotificationManager;
+			Notification _notifyDetails;
+			_mNotificationManager = (NotificationManager) service.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+			_notifyDetails = new Notification(R.drawable.spots, alert, System.currentTimeMillis());
+
+			long[] vibrate = { 100, 100, 200, 300 };
+			_notifyDetails.vibrate = vibrate;
+			_notifyDetails.defaults = Notification.DEFAULT_ALL;
+			
+			Intent notifyIntent = new Intent(service.getApplicationContext(), MainScreen.class);
+			PendingIntent intent = PendingIntent.getActivity(service.getApplicationContext(), 0, notifyIntent, android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+			_notifyDetails.setLatestEventInfo(service.getApplicationContext(), "Spot(s) found!", listLocation.size() + " history spot(s) near you.", intent);
+			_mNotificationManager.notify(0, _notifyDetails);
+			
+		} 
 	}
 
 	@Override

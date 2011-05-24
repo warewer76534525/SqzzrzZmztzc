@@ -4,6 +4,8 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -37,9 +39,7 @@ public class NearbyHistoryActivity extends Activity {
 		lvLocation.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 				Location loc = (Location)view.getTag();
-				String token = appPreference.getString("actk", "");
-				String url = "http://squareomatic.triplelands.com/squareomatic_checkin.php?placeid=" + loc.getId() + "&actk=" + token;
-				new PositionSender(url, NearbyHistoryActivity.this).execute();
+				showCheckinDialog(loc);
 			}
 		});
 	}
@@ -56,6 +56,22 @@ public class NearbyHistoryActivity extends Activity {
 		} else {
 			lvLocation.setAdapter(null);
 		}
+	}
+	
+	private void showCheckinDialog(final Location loc){
+		new AlertDialog.Builder(this)
+			.setIcon(android.R.drawable.ic_dialog_info)
+			.setTitle("Venue")
+			.setMessage(loc.getName())
+			.setNeutralButton("Chek In",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dlg, int sumthin) {
+						String token = appPreference.getString("actk", "");
+						String url = "http://202.51.96.41/som/checkin.php?placeid=" + loc.getId() + "&actk=" + token;
+						new PositionSender(url, NearbyHistoryActivity.this, null).execute();
+					}
+				})
+			.show();
 	}
 	
 }

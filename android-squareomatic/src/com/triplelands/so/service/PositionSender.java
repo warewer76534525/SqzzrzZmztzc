@@ -2,6 +2,9 @@ package com.triplelands.so.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -18,10 +21,12 @@ public class PositionSender extends AsyncTask<Void, String, Void> implements Int
 	private String url;
 //	private PositionSenderService service;
 	private Context context;
+	private List<NameValuePair> parameter;
 	
-	public PositionSender(String url, Context ctx) {
+	public PositionSender(String url, Context ctx, List<NameValuePair> parameter) {
 		this.url = url;
 		context = ctx;
+		this.parameter = parameter;
 //		this.service = service;
 		internetConnection = new InternetHttpConnection(this);
 	}
@@ -30,6 +35,7 @@ public class PositionSender extends AsyncTask<Void, String, Void> implements Int
 //	public void start(){
 		Log.i("CHECKIN", "CHECKING IN: " + url);
 		internetConnection.setAndAccessURL(url);
+//		internetConnection.postData(url, parameter);
 		return null;
 	}
 

@@ -20,15 +20,12 @@ public class LocationAdapterView extends LinearLayout {
 		setTag(loc);
 		
 		TextView txtName = (TextView)v.findViewById(R.id.txtLocationName);
-		TextView txtId = (TextView)v.findViewById(R.id.txtLocationId);
 		TextView txtDistance = (TextView)v.findViewById(R.id.txtLocationDistance);
 		txtName.setText(loc.getName());
-		txtId.setText(loc.getId());
-		txtDistance.setText("" + loc.getDistance() + " m");
+		txtDistance.setText("" + (int)Double.parseDouble(loc.getDistance()) + " m");
 		
 		Typeface font = Typeface.createFromAsset(context.getAssets(), "aescrawl.ttf");  
 		txtName.setTypeface(font);
-		txtId.setTypeface(font);
 		txtDistance.setTypeface(font);
 		
 		addView(v);
