@@ -24,8 +24,8 @@
 		<property name="destination" ref="checkinDestination" />
 		<property name="messageListener" ref="checkinHandler" />
 		<property name="sessionTransacted" value="true" />
-		<property name="subscriptionDurable" value="true" />
-		<property name="clientId" value="fileRemovedHandler"></property>
+		<property name="concurrentConsumers" value="10"></property>
 	</bean>
+	
 
 </beans>
