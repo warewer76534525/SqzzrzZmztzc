@@ -3,3 +3,6 @@ secret.properties
 *.keystore
 bin/
 gen/
+
+/src/com.squeromatic.web/war
+/src/com.squeromatic.web/build
