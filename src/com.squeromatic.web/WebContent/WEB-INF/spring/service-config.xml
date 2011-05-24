@@ -18,11 +18,14 @@
 		<constructor-arg value="jms.queue.checkin" />
 	</bean>
 	
-	<bean id="checkinJms" class="org.springframework.jms.core.JmsTemplate">
+	<bean
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
-		<property name="receiveTimeout" value="10000" />
-		<property name="defaultDestination" ref="checkinDestination" />
-		<property name="messageConverter" ref="serializableMessageConverter" />
+		<property name="destination" ref="checkinDestination" />
+		<property name="messageListener" ref="checkinHandler" />
+		<property name="sessionTransacted" value="true" />
+		<property name="subscriptionDurable" value="true" />
+		<property name="clientId" value="fileRemovedHandler"></property>
 	</bean>
 
 </beans>
