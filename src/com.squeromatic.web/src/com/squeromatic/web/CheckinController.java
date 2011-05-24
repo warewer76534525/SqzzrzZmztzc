@@ -36,11 +36,11 @@ public class CheckinController {
 		checkinJms.convertAndSend(command);
 	}
 
-	@RequestMapping(method = GET)
+	/*@RequestMapping(method = GET)
 	@ResponseBody
 	public CheckinCommand checkin() {
 		CheckinCommand command = new CheckinCommand("GK4GD5UQ5VL4XH2Q5EGA4LCGIWOPS0UMJATIJCSLLNNFM041", "4dd5333cfa7645a53ca9ebd1");
 		return command;
-	}
+	}*/
 
 }
