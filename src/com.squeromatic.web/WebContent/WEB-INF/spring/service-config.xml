@@ -18,6 +18,13 @@
 		<constructor-arg value="jms.queue.checkin" />
 	</bean>
 	
+	<bean id="checkinJms" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="receiveTimeout" value="10000" />
+		<property name="defaultDestination" ref="checkinDestination" />
+		<property name="messageConverter" ref="serializableMessageConverter" />
+	</bean>
+	
 	<bean
 		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
@@ -26,6 +33,5 @@
 		<property name="sessionTransacted" value="true" />
 		<property name="concurrentConsumers" value="10"></property>
 	</bean>
-	
 
 </beans>
