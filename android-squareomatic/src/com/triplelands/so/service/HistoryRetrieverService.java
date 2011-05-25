@@ -8,7 +8,6 @@ import android.location.LocationManager;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 public class HistoryRetrieverService extends Service {
 
@@ -40,30 +39,27 @@ public class HistoryRetrieverService extends Service {
 		latestLocation.setLatitude(latitude);
 		latestLocation.setLongitude(longitude);
 		
-		Log.i("LOCATION LATEST", "latitude:" + latitude + ", longitude:" + longitude);
-		Log.i("LOCATION", "latitude:" + location.getLatitude() + ", longitude:" + location.getLongitude());
+//		Log.i("LOCATION LATEST", "latitude:" + latitude + ", longitude:" + longitude);
+//		Log.i("LOCATION", "latitude:" + location.getLatitude() + ", longitude:" + location.getLongitude());
 		
 		if(location.getLatitude() != 0 || location.getLongitude() != 0){
-			Log.i("LOCATION", "latitude longitude");
-			Toast.makeText(getApplicationContext(),
-					"Latest: " + latitude + ", " + longitude +
-					"\nNew: " + location.getLatitude() + ", " + location.getLongitude() + 
-					"\nDistance: " + location.distanceTo(latestLocation), Toast.LENGTH_LONG).show();
-			
 			if(location.distanceTo(latestLocation) > 1000){
-				Log.i("LOCATION", "LOCATION DISTANCE > 1000");
+				Log.i("LOCATION", "LOCATION CHANGES");
 				updateLatestLocation(location.getLatitude(), location.getLongitude());
 				String token = appPreference.getString("actk", "");
-//				String url = "http://squareomatic.triplelands.com/checkin.php?lat=" + location.getLatitude() + "&long=" + location.getLongitude() + "&actk=" + token;
-//				Toast.makeText(getApplicationContext(), "checkin: " + url, Toast.LENGTH_LONG).show();				
-//				PositionSender sender = new PositionSender(url, this);
-//				sender.start();
 				
 				String url = "http://202.51.96.41/som/history.php?lat=" + location.getLatitude() + "&long=" + location.getLongitude() + "&actk=" + token;
-				new HistoryReceiver(url, this).execute();
+				final HistoryReceiver receiver = new HistoryReceiver(url, HistoryRetrieverService.this);
+				Thread t = new Thread(){
+					public void run() {
+						receiver.start();
+					}
+				};
+				t.setPriority(Thread.MAX_PRIORITY);
+				t.start();
+				
 			} else {
-				Log.i("LOCATION", "LOCATION DISTANCE < 1000. STOPPING SERVICE. WAITING FOR NEXT ALARM");
-				Toast.makeText(getApplicationContext(), "have not moved.", Toast.LENGTH_SHORT).show();
+				Log.i("LOCATION", "LOCATION NOT CHANGED. STOPPING SERVICE. WAITING FOR NEXT ALARM");
 				stopSelf();
 			}
 		} else {

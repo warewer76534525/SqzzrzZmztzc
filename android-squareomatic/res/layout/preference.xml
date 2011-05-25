@@ -10,15 +10,15 @@
     </LinearLayout>
     <LinearLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/linearLayout4" android:padding="20dp" android:gravity="center">
         <FrameLayout android:layout_height="match_parent" android:layout_width="wrap_content" android:id="@+id/frameLayout3" android:padding="5dp">
-            <Button android:layout_width="wrap_content" android:id="@+id/btnTellFriend" android:textColor="#FFFFFF" android:layout_height="wrap_content" android:background="@drawable/button_black" android:text="Tell Friend" android:textSize="16dp"></Button>
+            <Button android:layout_width="wrap_content" android:id="@+id/btnTellFriend" android:layout_height="wrap_content" android:background="@drawable/button_transparent" android:text="TELL FRIEND" android:textSize="16dp" android:textColor="#000000" android:textStyle="bold"></Button>
         </FrameLayout>
         <FrameLayout android:layout_height="match_parent" android:layout_width="wrap_content" android:id="@+id/frameLayout4" android:padding="5dp">
-            <Button android:layout_width="wrap_content" android:id="@+id/btnAboutUs" android:textColor="#FFFFFF" android:layout_height="wrap_content" android:background="@drawable/button_black" android:text="   About   " android:textSize="16dp"></Button>
+            <Button android:layout_width="wrap_content" android:id="@+id/btnAboutUs" android:layout_height="wrap_content" android:background="@drawable/button_transparent" android:text="   ABOUT   " android:textSize="16dp" android:textColor="#000000" android:textStyle="bold"></Button>
         </FrameLayout>
     </LinearLayout>
     <FrameLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/frameLayout2" android:padding="15dp">
         <LinearLayout android:id="@+id/linearLayout3" android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal">
-            <Button android:textSize="16dp" android:id="@+id/btnLogout" android:textColor="#FFFFFF" android:layout_gravity="center" android:background="@drawable/button_black" android:text="@string/logOff" android:layout_height="wrap_content" android:layout_width="fill_parent"></Button>
+            <Button android:textSize="16dp" android:id="@+id/btnLogout" android:textColor="#FFFFFF" android:layout_gravity="center" android:background="@drawable/button_transparent" android:text="@string/logOff" android:layout_height="wrap_content" android:layout_width="fill_parent" android:visibility="gone"></Button>
         </LinearLayout>
     </FrameLayout>
 	<Button android:layout_width="wrap_content"

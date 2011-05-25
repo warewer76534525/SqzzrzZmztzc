@@ -1,6 +1,5 @@
 package com.triplelands.so.activity;
 
-import android.app.NotificationManager;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -18,22 +17,19 @@ import com.triplelands.so.R;
 public class MainScreen extends TabActivity {
 
 	private TabHost mTabHost;
-	private NotificationManager _mNotificationManager;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		setTitle("SquareOmatic");
 		mTabHost = (TabHost)findViewById(android.R.id.tabhost);
-		
-		_mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-		_mNotificationManager.cancelAll();
 		
 //		mTabHost.getTabWidget().setDividerDrawable(android.R.drawable.divider_horizontal_bright);
 		Intent intent;
 		intent = new Intent().setClass(this, NearbyHistoryActivity.class);
 		setupTab(intent, "Near Me", R.drawable.tab_img_selector_history);
 		intent = new Intent().setClass(this, SettingActivity.class);
-		setupTab(intent, "My Preference", R.drawable.tab_img_selector_setting);
+		setupTab(intent, "Setting", R.drawable.tab_img_selector_setting);
 	}
 
 	private void setupTab(final Intent intent, final String tag, int imageId) {

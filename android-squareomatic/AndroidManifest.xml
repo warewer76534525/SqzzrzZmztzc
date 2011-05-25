@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.triplelands.so" android:versionCode="5"
-	android:versionName="1.4">
+	package="com.triplelands.so" android:versionCode="1"
+	android:versionName="0.0.1"
+	android:installLocation="auto" >
 	<uses-sdk android:minSdkVersion="4" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
 
 	<application android:icon="@drawable/icon" android:label="@string/app_name">
 		<activity android:name=".activity.RegisterPage"

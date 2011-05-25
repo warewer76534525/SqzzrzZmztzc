@@ -13,8 +13,11 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
@@ -27,6 +30,23 @@ public class InternetHttpConnection {
 	
 	public InternetHttpConnection(InternetConnectionListener listener) {
 		this.listener = listener;
+	}
+	
+	public void get(String url){
+		HttpGet request = new HttpGet(url);
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		HttpClient client = new DefaultHttpClient();
+		
+		try {
+			String body = client.execute(request, responseHandler);
+			listener.onReceivedBodyString(body);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+			listener.onConnectionError(e);
+		} catch (IOException e) {
+			e.printStackTrace();
+			listener.onConnectionError(e);
+		}
 	}
 
 	public void setAndAccessURL(String urlString) {
@@ -84,6 +104,7 @@ public class InternetHttpConnection {
 					}
 				} catch (Exception ex) {
 					if (listener != null) {
+						ex.printStackTrace();
 						Log.e("error", "error connecting to the internet");
 						listener.onConnectionError(ex);
 					}

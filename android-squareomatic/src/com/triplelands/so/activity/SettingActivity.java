@@ -21,7 +21,7 @@ import com.triplelands.so.scheduler.PositionScheduler;
 
 public class SettingActivity extends Activity { //implements LocationListener 
 	
-	private Button btnLogOff, btnClear, btnTellFriend, btnAbout;
+	private Button btnLogOff, btnTellFriend, btnAbout;
 	private ImageView btnSwitch;
 	private TextView txtStatus;
 	private SharedPreferences appPreference;
@@ -33,20 +33,23 @@ public class SettingActivity extends Activity { //implements LocationListener
 		
 		btnSwitch = (ImageView)findViewById(R.id.btnSwitch);
 		btnLogOff = (Button)findViewById(R.id.btnLogout);
-		btnClear = (Button)findViewById(R.id.btnClearHistory);
 		btnTellFriend = (Button)findViewById(R.id.btnTellFriend);
 		btnAbout = (Button)findViewById(R.id.btnAboutUs);
 		txtStatus = (TextView)findViewById(R.id.txtStatus);
 		btnSwitch.setOnClickListener(new ButtonClickListener());
 		btnLogOff.setOnClickListener(new ButtonClickListener());
-		btnClear.setOnClickListener(new ButtonClickListener());
+		btnAbout.setOnClickListener(new ButtonClickListener());
 		btnTellFriend.setOnClickListener(new ButtonClickListener());
 		Typeface font = Typeface.createFromAsset(this.getAssets(), "aescrawl.ttf");  
 		txtStatus.setTypeface(font);
 		btnLogOff.setTypeface(font);
 		btnTellFriend.setTypeface(font);
 		btnAbout.setTypeface(font);
+	}
+	
+	protected void onResume() {
 		updateButtonandStatus();
+		super.onResume();
 	}
 	
 	private class ButtonClickListener implements OnClickListener {
@@ -55,9 +58,8 @@ public class SettingActivity extends Activity { //implements LocationListener
 				if(isAlarmRunning()){
 					stopAlarmManager();
 				} else {
-					new PositionScheduler(getApplicationContext()).schedule(60000);
+					new PositionScheduler(getApplicationContext()).schedule(1500000);
 				}
-//				getApplicationContext().startService(new Intent(getApplicationContext(), PositionRetrieverService.class));
 				updateButtonandStatus();
 			} else if (v == btnLogOff){
 				stopAlarmManager();
@@ -69,8 +71,8 @@ public class SettingActivity extends Activity { //implements LocationListener
 				i.putExtra(Intent.EXTRA_SUBJECT, "SquareOmatic");
 				i.putExtra(Intent.EXTRA_TEXT, "Hey! Download SquareOmatic https://market.android.com/details?id=com.triplelands.so . Foursquare checkin getting easier! Enjoy!");
 				startActivity(Intent.createChooser(i, "Tell Friend via"));
-			} else if (v == btnClear){
-				clearLocationHistory();
+			} else if (v == btnAbout) {
+				new AboutUsDialog(SettingActivity.this).show();
 			}
 		}
 	};
@@ -80,14 +82,14 @@ public class SettingActivity extends Activity { //implements LocationListener
 		txtStatus.setText((isAlarmRunning()) ? "Service is RUNNING. Tap the button to turn off." : "Service is STOPPED. Tap the button to turn on.");
 	}
 	
-	private void clearLocationHistory() {
-		Log.i("CLEANING", "CLEANING HISTORY");
-		SharedPreferences.Editor editor = appPreference.edit();
-        editor.putString("history", "");
-        editor.putString("latitude", "0");
-        editor.putString("longitude", "0");
-        editor.commit();
-	}
+//	private void clearLocationHistory() {
+//		Log.i("CLEANING", "CLEANING HISTORY");
+//		SharedPreferences.Editor editor = appPreference.edit();
+//        editor.putString("history", "");
+//        editor.putString("latitude", "0");
+//        editor.putString("longitude", "0");
+//        editor.commit();
+//	}
 	
 	private void stopAlarmManager(){
 		Log.i("ALARM", "CANCELLING ALARM MANAGER");

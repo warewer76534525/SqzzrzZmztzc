@@ -18,7 +18,6 @@ public class PositionScheduler {
 	
 	public void schedule(long interval){
 		Log.i("SCHEDULE ", "Start Alarm repeat every: " + interval);
-//		Intent intent = new Intent(context, PositionSchedulerHandler.class);
 		Intent intent = new Intent("com.triplelands.so.START_UPDATE_LOCATION");
 		
 		PendingIntent senderIntent = PendingIntent.getBroadcast(context,

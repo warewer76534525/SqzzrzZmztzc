@@ -1,0 +1,35 @@
+<LinearLayout android:id="@+id/linearLayout1"
+	android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content" android:orientation="vertical">
+	<LinearLayout android:layout_width="match_parent"
+		android:layout_height="wrap_content" android:id="@+id/linearLayout3">
+		<ImageView android:layout_width="wrap_content" android:src="@drawable/logos_icon"
+			android:layout_gravity="center_vertical" android:id="@+id/imageView1"
+			android:layout_height="wrap_content" android:padding="10dp"></ImageView>
+		<LinearLayout android:layout_width="wrap_content"
+			android:orientation="vertical" android:layout_height="wrap_content"
+			android:id="@+id/linearLayout2" android:padding="10dp">
+			<TextView android:layout_width="wrap_content"
+				android:textStyle="bold" android:id="@+id/txtAppName"
+				android:paddingBottom="10dp" android:layout_height="wrap_content"
+				android:textColor="#FFFFFF" android:text="SquareOmatic"></TextView>
+			<TextView android:layout_width="wrap_content" android:id="@+id/textView2"
+				android:text="TripleLands Team" android:layout_height="wrap_content"
+				android:textColor="#FFFFFF"></TextView>
+			<TextView android:layout_width="wrap_content" android:id="@+id/textView3"
+				android:text="http://www.triplelands.com" android:layout_height="wrap_content"
+				android:textColor="#FFFFFF"></TextView>
+			<TextView android:layout_width="wrap_content" android:id="@+id/textView4"
+				android:text="triplelands@gmail.com" android:layout_height="wrap_content"
+				android:textColor="#FFFFFF"></TextView>
+		</LinearLayout>
+	</LinearLayout>
+	<LinearLayout android:layout_width="match_parent"
+		android:layout_height="wrap_content" android:id="@+id/linearLayout4">
+		<TextView
+			android:text="SuareOmatic makes it easier to check in to places you ever been in Foursquare. SquareOmatic will notify you when you are at the places you ever been.\n\nShare to your friends and wait for next update with other cool features!"
+			android:id="@+id/textView1" android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:textColor="#FFFFFF"
+			android:padding="5dp"></TextView>
+	</LinearLayout>
+</LinearLayout>

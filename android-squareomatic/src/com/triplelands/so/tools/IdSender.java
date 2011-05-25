@@ -49,4 +49,10 @@ public class IdSender extends AsyncTask<Void, String, Void> implements InternetC
 		
 	}
 
+	@Override
+	public void onReceivedBodyString(String body) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

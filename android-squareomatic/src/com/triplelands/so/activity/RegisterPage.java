@@ -26,6 +26,7 @@ public class RegisterPage extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.register);
+		setTitle("Loading. May take a view seconds...");
 		appPreference =  PreferenceManager.getDefaultSharedPreferences(RegisterPage.this.getApplicationContext());
 		webView = (WebView) findViewById(R.id.webViewSquare);
 		
@@ -47,10 +48,12 @@ public class RegisterPage extends Activity {
 		}
 		
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
+			setTitle("Loading. May take a view seconds...");
 			super.onPageStarted(view, url, favicon);
 		}
 
 		public void onPageFinished(WebView view, String url) {
+			setTitle("SquareOmatic");
 			String uri = webView.getUrl();
 			Log.i("URL", uri);
 			if(uri != null && uri.contains("actk")){

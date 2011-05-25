@@ -1,6 +1,5 @@
 package com.triplelands.so.service;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -11,7 +10,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -23,7 +21,7 @@ import com.triplelands.so.tools.InternetConnectionListener;
 import com.triplelands.so.tools.InternetHttpConnection;
 import com.triplelands.so.utils.JsonUtils;
 
-public class HistoryReceiver extends AsyncTask<Void, String, Void> implements InternetConnectionListener {
+public class HistoryReceiver implements InternetConnectionListener {
 
 	private String url;
 	private HistoryRetrieverService service;
@@ -37,24 +35,22 @@ public class HistoryReceiver extends AsyncTask<Void, String, Void> implements In
 		appPreference =  PreferenceManager.getDefaultSharedPreferences(service.getApplicationContext());
 	}
 	
-	protected Void doInBackground(Void... params) {
+	public void start() {
 		Log.i("RECEIVE HISTORY", "RECEIVING HISTORY: " + url);
-		internetConnection.setAndAccessURL(url);
-		return null;
+//		internetConnection.setAndAccessURL(url);
+		internetConnection.get(url);
 	}
 
 	@Override
 	public void onReceivedResponse(InputStream is, int length) {
-		byte input[] = new byte[length];
-		try {
-			is.read(input);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		String json = new String(input);
-		updateListHistory(json);
+	}
+	
+	@Override
+	public void onReceivedBodyString(String body) {
+		Log.i("HISTORY JSON", body);
+		updateListHistory(body);
 		fireNotification();
-		Log.i("HISTORY", "HISTORY UPDATED: " + json);
+		Log.i("HISTORY", "HISTORY UPDATED: " + body);
 		service.stopSelf();
 	}
 
