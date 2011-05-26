@@ -16,9 +16,8 @@
 			<TextView android:layout_width="wrap_content" android:id="@+id/textView2"
 				android:text="TripleLands Team" android:layout_height="wrap_content"
 				android:textColor="#FFFFFF"></TextView>
-			<TextView android:layout_width="wrap_content" android:id="@+id/textView3"
-				android:text="http://www.triplelands.com" android:layout_height="wrap_content"
-				android:textColor="#FFFFFF"></TextView>
+			<TextView android:layout_width="wrap_content" android:text="http://www.triplelands.com" android:layout_height="wrap_content"
+				android:textColor="#FFFFFF" android:id="@+id/txtWebsite"></TextView>
 			<TextView android:layout_width="wrap_content" android:id="@+id/textView4"
 				android:text="triplelands@gmail.com" android:layout_height="wrap_content"
 				android:textColor="#FFFFFF"></TextView>

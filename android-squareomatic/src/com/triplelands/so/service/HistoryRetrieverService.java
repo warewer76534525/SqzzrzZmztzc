@@ -42,14 +42,14 @@ public class HistoryRetrieverService extends Service {
 //		Log.i("LOCATION LATEST", "latitude:" + latitude + ", longitude:" + longitude);
 //		Log.i("LOCATION", "latitude:" + location.getLatitude() + ", longitude:" + location.getLongitude());
 		
+		Log.i("LOCATION", "Distance: " + location.distanceTo(latestLocation));
 		if(location.getLatitude() != 0 || location.getLongitude() != 0){
-			if(location.distanceTo(latestLocation) > 1000){
-				Log.i("LOCATION", "LOCATION CHANGES");
-				updateLatestLocation(location.getLatitude(), location.getLongitude());
+			if(location.distanceTo(latestLocation) > 850){
+				Log.i("LOCATION", "LOCATION CHANGED");
 				String token = appPreference.getString("actk", "");
 				
 				String url = "http://202.51.96.41/som/history.php?lat=" + location.getLatitude() + "&long=" + location.getLongitude() + "&actk=" + token;
-				final HistoryReceiver receiver = new HistoryReceiver(url, HistoryRetrieverService.this);
+				final HistoryReceiver receiver = new HistoryReceiver(url, HistoryRetrieverService.this, location);
 				Thread t = new Thread(){
 					public void run() {
 						receiver.start();
@@ -65,13 +65,6 @@ public class HistoryRetrieverService extends Service {
 		} else {
 			Log.i("LOCATION 0", "latitude and longitude 0");
 		}
-	}
-	
-	private void updateLatestLocation(double updateLatitude, double updateLongitude){
-		SharedPreferences.Editor editor = appPreference.edit();
-        editor.putString("latitude", "" + updateLatitude);
-        editor.putString("longitude", "" + updateLongitude);
-        editor.commit();
 	}
 
 }

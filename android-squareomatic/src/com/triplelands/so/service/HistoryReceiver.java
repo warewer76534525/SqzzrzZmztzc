@@ -27,10 +27,12 @@ public class HistoryReceiver implements InternetConnectionListener {
 	private HistoryRetrieverService service;
 	private InternetHttpConnection internetConnection;
 	private SharedPreferences appPreference;
+	private android.location.Location loc;
 	
-	public HistoryReceiver(String url, HistoryRetrieverService service) {
+	public HistoryReceiver(String url, HistoryRetrieverService service, android.location.Location loc) {
 		this.url = url;
 		this.service = service;
+		this.loc = loc;
 		internetConnection = new InternetHttpConnection(this);
 		appPreference =  PreferenceManager.getDefaultSharedPreferences(service.getApplicationContext());
 	}
@@ -49,6 +51,7 @@ public class HistoryReceiver implements InternetConnectionListener {
 	public void onReceivedBodyString(String body) {
 		Log.i("HISTORY JSON", body);
 		updateListHistory(body);
+		updateLatestLocation(loc.getLatitude(), loc.getLongitude());
 		fireNotification();
 		Log.i("HISTORY", "HISTORY UPDATED: " + body);
 		service.stopSelf();
@@ -57,6 +60,13 @@ public class HistoryReceiver implements InternetConnectionListener {
 	private void updateListHistory(String data) {
 		SharedPreferences.Editor editor = appPreference.edit();
         editor.putString("history", data);
+        editor.commit();
+	}
+	
+	private void updateLatestLocation(double updateLatitude, double updateLongitude){
+		SharedPreferences.Editor editor = appPreference.edit();
+        editor.putString("latitude", "" + updateLatitude);
+        editor.putString("longitude", "" + updateLongitude);
         editor.commit();
 	}
 	
